@@ -2,7 +2,8 @@
 
 AI-powered PCB (Printed Circuit Board) defect detection combining YOLOv11 object detection with a LangChain agent for natural language quality management queries.
 
-**Live Demo:** https://pcb-defect-intelligence.onrender.com/docs
+**Live Demo:** <https://pcb-defect-intelligence.onrender.com/docs> 
+
 **GitHub:** https://github.com/codextivity/pcb-defect-intelligence
 
 ---
