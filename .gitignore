@@ -7,7 +7,7 @@ data/defects.db
 data/samples/
 models/trained/
 models/runs/
-models/deployed/
+# models/deployed/
 runs/
 mlruns/
 mlflow.db
