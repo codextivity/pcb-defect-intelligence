@@ -1,8 +1,8 @@
 # 🔍 PCB Defect Intelligence System
 
-AI-powered PCB (Printed Circuit Board) defect detection combining YOLOv11 object
-detection with a LangChain agent for natural language quality management queries.
+AI-powered PCB (Printed Circuit Board) defect detection combining YOLOv11 object detection with a LangChain agent for natural language quality management queries.
 
+**Live Demo:** https://pcb-defect-intelligence.onrender.com/docs
 **GitHub:** https://github.com/codextivity/pcb-defect-intelligence
 
 ---
@@ -20,6 +20,7 @@ GET  /health          → service status and model load state
 ```
 
 Ask questions in natural language:
+
 ```
 "What is our yield rate today?"
 "Which defect type is most common?"
@@ -32,7 +33,7 @@ Ask questions in natural language:
 ## Detected Defect Types
 
 | Defect | Description | Test mAP50 |
-|---|---|---|
+| --- | --- | --- |
 | missing_hole | Drill hole absent from PCB | 0.828 |
 | short | Unintended copper connection | 0.852 |
 | spurious_copper | Excess copper remaining | 0.833 |
@@ -81,27 +82,13 @@ PCB Image
 
 ## Key Engineering Decisions
 
-**Why YOLOv11 for PCB defect detection?**
-PCB defects are extremely small — average bounding box area is 0.09% of the image.
-YOLOv11 with imgsz=640 provides the resolution needed to detect these tiny defects
-in real-time at 1.2ms inference speed.
+**Why YOLOv11 for PCB defect detection**?PCB defects are extremely small — average bounding box area is 0.09% of the image. YOLOv11 with imgsz=640 provides the resolution needed to detect these tiny defects in real-time at 1.2ms inference speed.
 
-**Why a tiered verification system?**
-Mouse bite defects scored 0.657 mAP50 due to irregular shape and similarity to
-normal PCB edges. Low-confidence detections are flagged for GPT-4o vision
-verification — the same approach used in industrial inspection pipelines where
-false positives are costly.
+**Why a tiered verification system**?Mouse bite defects scored 0.657 mAP50 due to irregular shape and similarity to normal PCB edges. Low-confidence detections are flagged for GPT-4o vision verification — the same approach used in industrial inspection pipelines where false positives are costly.
 
-**Why LangChain agent over a fixed dashboard?**
-Quality engineers ask unpredictable questions. A fixed dashboard only answers
-predefined queries. The LangChain agent answers any quality question grounded in
-real inspection data — defect trends, yield rates, and specific recommendations
-per defect type.
+**Why LangChain agent over a fixed dashboard**?Quality engineers ask unpredictable questions. A fixed dashboard only answers predefined queries. The LangChain agent answers any quality question grounded in real inspection data — defect trends, yield rates, and specific recommendations per defect type.
 
-**Why the dataset required no class weighting?**
-The PCB defect dataset has exceptional balance — 1.2x imbalance ratio across
-6 classes. This is unlike typical manufacturing datasets and enabled strong
-performance across all defect types without special augmentation.
+**Why the dataset required no class weighting**?The PCB defect dataset has exceptional balance — 1.2x imbalance ratio across 6 classes. This is unlike typical manufacturing datasets and enabled strong performance across all defect types without special augmentation.
 
 ---
 
@@ -136,7 +123,7 @@ Test results (held-out, never seen during training):
 ## Tech Stack
 
 | Component | Technology | Purpose |
-|---|---|---|
+| --- | --- | --- |
 | Object detection | YOLOv11n | PCB defect detection |
 | Vision verification | GPT-4o | Uncertain detection verification |
 | LLM framework | LangChain + LangGraph | Agent with 5 database tools |
@@ -150,7 +137,7 @@ Test results (held-out, never seen during training):
 ## API Endpoints
 
 | Method | Endpoint | Description |
-|---|---|---|
+| --- | --- | --- |
 | GET | /health | Service status |
 | POST | /inspect | Upload PCB image for defect analysis |
 | POST | /query | Natural language quality query |
@@ -228,8 +215,7 @@ pcb-defect-intelligence/
 
 ## Deployment Notes
 
-The system requires approximately 300-400MB RAM for the ONNX model
-alongside the LangChain agent.
+The system requires approximately 300-400MB RAM for the ONNX model alongside the LangChain agent.
 
 ```bash
 # Local deployment
@@ -243,41 +229,15 @@ docker-compose up
 
 ## Interview Talking Points
 
-**On the detection architecture:**
-"PCB defects are extremely small — average bounding box area is 0.09%
-of the image, compared to 5-9% for PPE items in my SafeVision project.
-This required careful threshold tuning and a higher precision model.
-The YOLOv11n achieved 0.903 mAP50 on validation and 0.772 on the
-held-out test set across all 6 defect classes."
+**On the detection architecture:**"PCB defects are extremely small — average bounding box area is 0.09% of the image, compared to 5-9% for PPE items in my SafeVision project. This required careful threshold tuning and a higher precision model. The YOLOv11n achieved 0.903 mAP50 on validation and 0.772 on the held-out test set across all 6 defect classes."
 
-**On the dataset quality:**
-"The PCB dataset had exceptional class balance at 1.2x imbalance ratio
-across 6 classes. This is rare in manufacturing datasets and directly
-contributed to strong performance across all defect types without
-requiring special class weighting or augmentation strategies."
+**On the dataset quality:**"The PCB dataset had exceptional class balance at 1.2x imbalance ratio across 6 classes. This is rare in manufacturing datasets and directly contributed to strong performance across all defect types without requiring special class weighting or augmentation strategies."
 
-**On the tiered verification:**
-"Mouse bite defects scored 0.657 mAP50 due to their irregular shape
-and visual similarity to normal PCB edges. Rather than accepting this
-limitation, I designed a tiered system where low-confidence detections
-are flagged for GPT-4o vision verification — reducing false positives
-in the quality record without missing real defects."
+**On the tiered verification:**"Mouse bite defects scored 0.657 mAP50 due to their irregular shape and visual similarity to normal PCB edges. Rather than accepting this limitation, I designed a tiered system where low-confidence detections are flagged for GPT-4o vision verification — reducing false positives in the quality record without missing real defects."
 
-**On the LangChain agent:**
-"Quality engineers do not want to write SQL queries. The LangChain agent
-translates natural language questions into database queries and returns
-actionable insights. It generates defect-specific recommendations —
-for missing holes it suggests checking drill bit condition, for open
-circuits it recommends reviewing etching time. These recommendations
-are grounded in real inspection data, not generic advice."
+**On the LangChain agent:**"Quality engineers do not want to write SQL queries. The LangChain agent translates natural language questions into database queries and returns actionable insights. It generates defect-specific recommendations — for missing holes it suggests checking drill bit condition, for open circuits it recommends reviewing etching time. These recommendations are grounded in real inspection data, not generic advice."
 
-**On relevance to 삼성전기:**
-"This project directly maps to Samsung Electro-Mechanics' MLCC and
-substrate inspection requirements. The same architecture — YOLO detection,
-confidence-based routing, GPT-4o verification, and natural language
-quality reporting — applies to any manufacturing inspection domain.
-The transition from PCB defects to MLCC defects requires only
-retraining on the target dataset."
+**On relevance to 삼성전기:**"This project directly maps to Samsung Electro-Mechanics' MLCC and substrate inspection requirements. The same architecture — YOLO detection, confidence-based routing, GPT-4o verification, and natural language quality reporting — applies to any manufacturing inspection domain. The transition from PCB defects to MLCC defects requires only retraining on the target dataset."
 
 ---
 
@@ -294,10 +254,10 @@ retraining on the target dataset."
 
 ## Author
 
-Built by [Codextivity](https://github.com/codextivity) applying
-Computer Vision expertise to electronics manufacturing inspection.
+Built by [Codextivity](https://github.com/codextivity) applying Computer Vision expertise to electronics manufacturing inspection.
 
 **Related projects:**
+
 - [SafeVision PPE Compliance System](https://github.com/codextivity/safevision)
 - [LangChain Research Copilot](https://github.com/codextivity/langchain-copilot)
 - [Multimodal Document Intelligence](https://github.com/codextivity/multimodal-doc-intelligence)
