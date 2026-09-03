@@ -23,13 +23,15 @@ async def lifespan(app: FastAPI):
     import asyncio
 
     async def warmup():
-        await asyncio.sleep(2)
+        await asyncio.sleep(3)
         try:
             from app.core.detector import PCBDetector
             from app.core.agent import build_quality_agent
+            from app.config import settings
+            from pathlib import Path
 
             if Path(settings.yolo_model_path).exists():
-                print("Loading PCB detector...")
+                print(f"Loading detector: {settings.yolo_model_path}")
                 app.state.detector = PCBDetector(settings.yolo_model_path)
                 print("Detector ready")
 
