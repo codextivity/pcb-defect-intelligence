@@ -1,0 +1,12 @@
+{
+  "test_mAP50": 0.7722467316863759,
+  "test_mAP50_95": 0.43613815349034674,
+  "test_precision": 0.9179675184840762,
+  "test_recall": 0.7836726451664603,
+  "test_mAP50_missing_hole": 0.828070328470576,
+  "test_mAP50_mouse_bite": 0.6566583331773047,
+  "test_mAP50_open_circuit": 0.7453176806501882,
+  "test_mAP50_short": 0.8523185786416665,
+  "test_mAP50_spur": 0.7184056033092561,
+  "test_mAP50_spurious_copper": 0.8327098658692645
+}

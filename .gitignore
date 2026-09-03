@@ -1,0 +1,16 @@
+# .gitignore
+.env
+__pycache__/
+*.pyc
+data/raw/
+data/defects.db
+data/samples/
+models/trained/
+models/runs/
+models/deployed/
+runs/
+mlruns/
+mlflow.db
+*.egg-info/
+.DS_Store
+yolo11n.pt

@@ -1,0 +1,29 @@
+# params.yaml
+model:
+  architecture: yolo11n.pt
+  imgsz: 640
+  epochs: 50
+  batch_size: 32
+  optimizer: AdamW
+  lr0: 0.001
+  lrf: 0.01
+  cls_loss_weight: 1.0
+  patience: 15
+
+data:
+  train_images: 3224
+  val_images: 1592
+  test_images: 537
+  num_classes: 6
+  class_names:
+    - missing_hole
+    - mouse_bite
+    - open_circuit
+    - short
+    - spur
+    - spurious_copper
+
+deployment:
+  confidence_threshold: 0.25
+  verification_threshold: 0.70
+  onnx_opset: 12
