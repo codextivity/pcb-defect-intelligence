@@ -15,7 +15,7 @@ class Settings(BaseSettings):
 
     # Model settings
     openai_chat_model: str = "gpt-4o-mini"
-    yolo_model_path: str = "models/trained/best_nano.pt"
+    yolo_model_path: str = "models/deployed/best_nano.onnx"
     yolo_base_model: str = "yolo11n.pt"
 
     # Class names — 6 PCB defect types
